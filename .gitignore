@@ -7,3 +7,5 @@ package-lock.json
 # Environment varibales
 .env*
 
+# uploaded files
+assets/uploads/*

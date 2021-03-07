@@ -5,6 +5,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const compression = require('compression');
 const cors = require('cors');
 const httpStatus = require('http-status');
+const apolloServer = require('./apolloServer');
 const config = require('./config/config');
 const morgan = require('./config/morgan');
 const { authLimiter } = require('./middlewares/rateLimiter');
@@ -20,7 +21,7 @@ if (config.env !== 'test') {
 }
 
 // set security HTTP headers
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: config.env === 'production' ? undefined : false }));
 
 // parse json request body
 app.use(express.json());
@@ -46,6 +47,9 @@ if (config.env === 'production') {
 
 // v1 api routes
 app.use('/v1', routes);
+
+// GraphQL server setup
+apolloServer.applyMiddleware({ app, path: '/graphql' });
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
