@@ -56,10 +56,21 @@ const getPolicyCategoryByName = async (name) => {
   return PolicyCategory.findOne({ name });
 };
 
+/**
+ * Query for policy based on user id
+ * @param {ObjectId} userId - User id
+ * @returns {Promise<QueryResult>}
+ */
+const queryPolicyByUserID = async (userId) => {
+  const users = await Policy.find({ user: userId }).populate('category').populate('agent').populate('carrier');
+  return users;
+};
+
 module.exports = {
   createPolicy,
   createPolicyCarrier,
   createPolicyCategory,
   getPolicyCarrierByName,
   getPolicyCategoryByName,
+  queryPolicyByUserID,
 };

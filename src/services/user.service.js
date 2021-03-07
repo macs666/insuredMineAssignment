@@ -70,6 +70,16 @@ const queryUsers = async (filter, options) => {
   return users;
 };
 
+/**
+ * Query for users
+ * @param {Object} filter - Mongo filter
+ * @returns {Promise<QueryResult>}
+ */
+const queryAllUsers = async (filter) => {
+  const users = await User.find(filter).populate('policies');
+  return users;
+};
+
 module.exports = {
   createUser,
   createAgent,
@@ -77,4 +87,5 @@ module.exports = {
   queryUsers,
   getUserByEmail,
   getAgentByName,
+  queryAllUsers,
 };

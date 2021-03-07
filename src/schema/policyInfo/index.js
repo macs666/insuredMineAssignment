@@ -18,6 +18,7 @@ const typeDefs = gql`
   }
   extend type Query {
     policies: [Policy]
+    search(name: String): [Policy]
   }
 `;
 

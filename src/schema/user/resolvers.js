@@ -3,8 +3,9 @@ const { userService } = require('../../services');
 // Define resolvers
 const resolvers = {
   Query: {
-    async users() {
-      console.log('something');
+    async users(_, inputData) {
+      const users = await userService.queryAllUsers(inputData.filter);
+      return users;
     },
   },
   Mutation: {

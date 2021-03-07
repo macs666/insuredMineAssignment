@@ -12,6 +12,7 @@ const typeDefs = gql`
     email: String
     gender: String
     userType: String
+    policies: [Policy]
   }
 
   type Agent {
@@ -34,7 +35,7 @@ const typeDefs = gql`
   }
 
   extend type Query {
-    users: [User]
+    users(filter: CreateUserInput): [User]
   }
   extend type Mutation {
     createUser(user: CreateUserInput): String
